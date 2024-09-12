@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Employee</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        input[type="text"]::placeholder {
+            color: #aaa;
+        }
+
+        button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        // Function to show an alert and then redirect
+        function showAlertAndRedirect(message, redirectUrl) {
+            if (message) {
+                alert(message);
+                setTimeout(function () {
+                    window.location.href = redirectUrl;
+                }, 1500); // Redirect after 1.5 seconds
+            }
+        }
+    </script>
+</head>
+
+<body onload="showAlertAndRedirect('{{ msg }}', '{{ url_for('admin_dashboard') }}')">
+    <header>
+        <h1>Edit Employee</h1>
+    </header>
+
+    <div class="container">
+        <form method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{ employee['username'] }}" required>
+
+            <label for="role">Role:</label>
+            <select id="role" name="role">
+                <option value="admin" {% if employee['role']=='admin' %}selected{% endif %}>Admin</option>
+                <option value="employee" {% if employee['role']=='employee' %}selected{% endif %}>Employee</option>
+            </select>
+
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" placeholder="Leave blank to keep current password">
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="{{ employee['email'] }}" required>
+
+            <label for="mobile_number">Mobile Number:</label>
+            <input type="text" id="mobile_number" name="mobile_number" value="{{ employee['mobile_number'] }}" required>
+
+            <button type="submit">Update</button>
+        </form>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="back-link">Back to Dashboard</a>
+    </div>
+</body>
+
+</html>
